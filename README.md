@@ -1,2 +1,2 @@
-# flutter_engine_builder
-POC with githubactions
+# Flutter Engine Builder
+Tried to build libflutter.so with github actions but it fails with some error
