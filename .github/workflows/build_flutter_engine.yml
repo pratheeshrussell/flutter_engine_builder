@@ -27,7 +27,6 @@ jobs:
         run: echo "${HOME}/depot_tools" >> $GITHUB_PATH
       - name: gcclient Setup
         run: |
-           ${HOME}
            mkdir customEngine
            cd customEngine
            echo 'solutions = [{"managed": False,"name": "src/flutter","url": "'$ROOT_DIR/engine'","custom_deps": {},"deps_file": "DEPS","safesync_url": "",},]' > .gclient
