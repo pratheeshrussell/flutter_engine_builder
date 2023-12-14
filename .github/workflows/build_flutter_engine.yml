@@ -23,12 +23,11 @@ jobs:
         run: git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git
       - name: Clone Flutter repo
         run: git clone https://github.com/flutter/engine.git
+      - name: Set env path
+        run: echo "${HOME}/depot_tools" >> $GITHUB_PATH
       - name: gcclient Setup
         run: |
-           pwd
-           ROOT_DIR=`pwd` 
-           $ROOT_DIR
-           export PATH=$ROOT_DIR/depot_tools:$PATH
+           ${HOME}
            mkdir customEngine
            cd customEngine
            echo 'solutions = [{"managed": False,"name": "src/flutter","url": "'$ROOT_DIR/engine'","custom_deps": {},"deps_file": "DEPS","safesync_url": "",},]' > .gclient
