@@ -26,8 +26,8 @@ jobs:
         run: sudo apt-get install -y git wget curl software-properties-common unzip python-pip lsb-release sudo apt-transport-https ninja-build
       - name: Clone depot_tools
         run: git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git
-      - name: Clone Flutter repo
-        run: git clone https://github.com/flutter/engine/tree/0545f8705df301877d787107bac1a6e9fc9ee1ad.git
+      - name: Clone Flutter repo for V3.13.9
+        run: git clone https://github.com/flutter/engine/tree/0545f8705df301877d787107bac1a6e9fc9ee1ad
       - name: Set env path
         run: echo "${HOME}/depot_tools" >> $GITHUB_PATH
       - name: gcclient Setup
