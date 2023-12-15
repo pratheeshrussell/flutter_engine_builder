@@ -39,9 +39,15 @@ jobs:
            echo 'solutions = [{"managed": False,"name": "src/flutter","url": "'$ROOT_DIR/engine'","custom_deps": {},"deps_file": "DEPS","safesync_url": "",},]' > .gclient
            gclient sync
       - name: ninja build libflutter
-        run: export PATH=$PATH:`pwd`/depot_tools && customEngine/src/flutter/tools/gn --android --android-cpu=arm64 --runtime-mode=release && ninja -C customEngine/src/out/android_release_arm64
+        run: |
+          ROOT_DIR=`pwd` 
+          export PATH=$ROOT_DIR/depot_tools:$PATH 
+          customEngine/src/flutter/tools/gn --android --android-cpu=arm64 --runtime-mode=release && ninja -C customEngine/src/out/android_release_arm64
       - name: ninja build libflutter32
-        run: export PATH=$PATH:`pwd`/depot_tools && customEngine/src/flutter/tools/gn --android --android-cpu=arm --runtime-mode=release && ninja -C customEngine/src/out/android_release
+        run: |
+          ROOT_DIR=`pwd` 
+          export PATH=$ROOT_DIR/depot_tools:$PATH 
+          customEngine/src/flutter/tools/gn --android --android-cpu=arm --runtime-mode=release && ninja -C customEngine/src/out/android_release
       - name: Move to builds
         run: |
          mkdir builds
