@@ -22,9 +22,9 @@ jobs:
         run: sudo apt-get install -y git wget curl software-properties-common unzip python-pip lsb-release sudo apt-transport-https ninja-build
       - name: Clone depot_tools
         run: git clone --depth 1 https://chromium.googlesource.com/chromium/tools/depot_tools.git
-      - name: Clone Flutter repo for V3.16.4
+      - name: Clone Flutter repo
         run: | 
-          git clone --depth 1 -b '$EngineBranch' --single-branch '$EngineRepo'
+          git clone --depth 1 -b $EngineBranch --single-branch $EngineRepo
       - name: gcclient Setup
         run: |
            ROOT_DIR=`pwd` 
