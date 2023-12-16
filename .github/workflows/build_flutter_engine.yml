@@ -1,11 +1,7 @@
-# This is a basic workflow to help you get started with Actions
-
 name: BUILD FLUTTER ENGINE
-
 # Controls when the workflow will run
 on:
   workflow_dispatch:
-
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   build:
@@ -38,30 +34,21 @@ jobs:
            cd customEngine
            echo 'solutions = [{"managed": False,"name": "src/flutter","url": "'$ROOT_DIR/engine'","custom_deps": {},"deps_file": "DEPS","safesync_url": "",},]' > .gclient
            gclient sync
-      - name: Copy gcfiles
-        run: |
-         mkdir builds
-         cp customEngine/src/third_party/dart/runtime/vm/clustered_snapshot.cc gclientcopy/clustered_snapshot.cc 2>/dev/null || :
-         cp customEngine/src/third_party/dart/runtime/vm/class_table.cc gclientcopy/class_table.cc 2>/dev/null || :
-         cp customEngine/src/third_party/dart/runtime/bin/socket.cc gclientcopy/socket.cc 2>/dev/null || :
-      - name: Save the gcfiles files
-        uses: actions/upload-artifact@v3
-        with:
-          name: gclientFiles
-          path:  gclientcopy/*.cc
-          if-no-files-found: warn
-      - name: ninja build libflutter
+      - name: ninja build arm64
         run: |
           ROOT_DIR=`pwd` 
           export PATH=$ROOT_DIR/depot_tools:$PATH 
           customEngine/src/flutter/tools/gn --android --android-cpu=arm64 --runtime-mode=release && ninja -C customEngine/src/out/android_release_arm64
-        if: false
-      - name: ninja build libflutter32
+      - name: ninja build arm
         run: |
           ROOT_DIR=`pwd` 
           export PATH=$ROOT_DIR/depot_tools:$PATH 
           customEngine/src/flutter/tools/gn --android --android-cpu=arm --runtime-mode=release && ninja -C customEngine/src/out/android_release
-        if: false
+      - name: ninja build x64
+        run: |
+          ROOT_DIR=`pwd` 
+          export PATH=$ROOT_DIR/depot_tools:$PATH 
+          customEngine/src/flutter/tools/gn --android --android-cpu=x64 --runtime-mode=release && ninja -C customEngine/src/out/android_release_x64
       - name: Move to builds
         run: |
          mkdir builds
@@ -69,14 +56,9 @@ jobs:
          cp customEngine/src/out/android_release/lib.stripped/libflutter.so builds/libflutter_arm.so 2>/dev/null || :
          cp customEngine/src/out/android_release_x64/lib.stripped/libflutter.so builds/libflutter_x64.so 2>/dev/null || :
          cp customEngine/src/out/android_jit_release_x86/lib.stripped/libflutter.so builds/libflutter_x86.so 2>/dev/null || :
-        if: false
       - name: Save the generated files
         uses: actions/upload-artifact@v3
         with:
           name: flutter-engine
           path: builds/*.so
           if-no-files-found: warn
-        if: false
-           
-           
-
