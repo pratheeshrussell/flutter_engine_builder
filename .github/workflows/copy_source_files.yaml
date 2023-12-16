@@ -24,7 +24,7 @@ jobs:
         run: git clone --depth 1 https://chromium.googlesource.com/chromium/tools/depot_tools.git
       - name: Clone Flutter repo for V3.16.4
         run: | 
-          git clone --depth 1 -b $EngineBranch --single-branch $EngineRepo
+          git clone --depth 1 -b '$EngineBranch' --single-branch '$EngineRepo'
       - name: gcclient Setup
         run: |
            ROOT_DIR=`pwd` 
